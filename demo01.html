@@ -11,13 +11,20 @@
     <script src="./static/vue.js"></script>
     <script src="./static/vue-resource.js"></script>
     <title>键盘事件</title>
+    <style>
+        .red{
+            color:red;
+        }
+    </style>
     <script>
         window.onload=function(){
             new Vue({
                 el:'#box',
                 data:{
                     url:'https://www.baidu.com/img/bd_logo1.png?qua=high&where=super',
-                    msg:"666"
+                    msg:"666",
+                    w:'100px',
+                    color:'red'
                 },
                 methods:{
                     show:function(ev){
@@ -42,7 +49,7 @@
     <div class="container" id="box">
         <input type="button" class="btn btn-primary btn-sm btn-danger" value="点击" v-on:click="show($event)">
         <input type="text" class="input-sm" v-on:keyup.F8="show2($event)">
-        <img v-bind:src="url" alt="">
+        <img v-bind:src="url" alt="" width="{{w}}">
         <input type="text" v-model="msg">
         <br>
         {{msg}}
@@ -53,6 +60,9 @@
 
         <hr>
         <input type="button" class="btn btn-primary btn-sm btn-danger" value="发送get请求" v-on:click="get()">
+        <br>
+
+        <div v-bind:class="color">文字</div>
     </div>
 </body>
 </html>

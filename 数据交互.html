@@ -11,6 +11,11 @@
     <script src="./static/vue.js"></script>
     <script src="./static/vue-resource.js"></script>
     <title>数据交互</title>
+    <style>
+        .gray{
+            background: red;
+        }
+    </style>
     <script>
         window.onload=function(){
             new Vue({
@@ -28,11 +33,58 @@
                         });
                     },
                     post:function(){
-                        this.$http.post('post.php',{a:1,b:10},{emulateJson:true}).then(function(res){
+                        this.$http.post('post.php',{a:1,b:10},{emulateJSON:true}).then(function(res){
                             alert(res.data);
                         },function(res){
                             console.log(res);
                         });
+                    }
+                }
+            });
+
+            new Vue({
+                el:'#app',
+                data:{
+                    sk:'',
+                    list:[],
+                    now:-1
+                },
+                methods:{
+                    search:function(ev){
+                        if(ev.keyCode == 38 || ev.keyCode == 40){
+                            return;
+                        }
+                        if(ev.keyCode == 13){
+                            window.open('https://www.baidu.com/s?wd='+this.sk);
+                            this.sk = '';
+                        }
+                        this.$http.jsonp(
+                            'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su',
+                            {
+                                'wd':this.sk
+                            },
+                            {
+                                jsonp:'cb'
+                            }
+                        ).then(function(res){
+                            this.list = res.data.s;
+                        },function(res){
+                            alert('请求失败');
+                        });
+                    },
+                    next:function(){
+                        this.now++;
+                        if(this.now == this.list.length){
+                            this.now = -1;
+                        }
+                        this.sk = this.list[this.now]
+                    },
+                    up:function(){
+                        if(this.now == -1){
+                            this.now = this.list.length;
+                        }
+                        this.now--;
+                        this.sk = this.list[this.now]
                     }
                 }
             });
@@ -43,6 +95,13 @@
     <div class="container" id="box">
         <input type="button" class="btn btn-primary btn-sm btn-danger" value="发送get请求" v-on:click="get()">
         <input type="button" class="btn btn-primary btn-sm btn-danger" value="发送post请求" v-on:click="post()">
+    </div>
+
+    <div class="container" id="app">
+        <input type="text" placeholder="请输入百度搜索关键字" class="input-lg" v-model="sk" v-on:keyup="search($event)" v-on:keyup.down="next()" v-on:keydown.up.prevent="up()">
+        <ul>
+            <li v-for="item in list" v-bind:class="{gray:now==$index}">{{item}}</li>
+        </ul>
     </div>
 </body>
 </html>
