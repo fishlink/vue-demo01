@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./static/bootstrap.min.css">
+    <script src="./static/jquery-1.7.2.js"></script>
+    <script src="./static/bootstrap.js"></script>
+    <script src="./static/vue.js"></script>
+    <script src="./static/vue-resource.js"></script>
+    <title>数据交互</title>
+    <script>
+        window.onload=function(){
+            new Vue({
+                el:'#box',
+                data:{
+                    url:'https://www.baidu.com/img/bd_logo1.png?qua=high&where=super',
+                    msg:"666"
+                },
+                methods:{
+                    get:function(){
+                        this.$http.get('get.php',{a:1,b:5}).then(function(res){
+                            alert(res.data);
+                        },function(res){
+                            console.log(res);
+                        });
+                    },
+                    post:function(){
+                        this.$http.post('post.php',{a:1,b:10},{emulateJson:true}).then(function(res){
+                            alert(res.data);
+                        },function(res){
+                            console.log(res);
+                        });
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="container" id="box">
+        <input type="button" class="btn btn-primary btn-sm btn-danger" value="发送get请求" v-on:click="get()">
+        <input type="button" class="btn btn-primary btn-sm btn-danger" value="发送post请求" v-on:click="post()">
+    </div>
+</body>
+</html>
