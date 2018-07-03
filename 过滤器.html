@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./static/bootstrap.min.css">
+    <script src="./static/jquery-1.7.2.js"></script>
+    <script src="./static/bootstrap.js"></script>
+    <script src="./static/vue.js"></script>
+    <script src="./static/vue-resource.js"></script>
+    <title>键盘事件</title>
+    <style>
+        .red{
+            color:red;
+        }
+    </style>
+    <script>
+        Vue.directive()
+        Vue.filter('toDou',function(input){
+            return input<10?'0'+input:input;
+        });
+        window.onload=function(){
+            new Vue({
+                el:'#box',
+                data:{
+                    a:'9'
+                },
+                methods:{
+                }
+            });
+
+        }
+    </script>
+</head>
+<body>
+    <div class="container" id="box">
+        {{a | toDou}}
+    </div>
+</body>
+</html>
