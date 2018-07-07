@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./static/bootstrap.min.css">
+    <script src="./static/jquery-1.7.2.js"></script>
+    <script src="./static/bootstrap.js"></script>
+    <script src="./static/vue.js"></script>
+    <script src="./static/vue-resource.js"></script>
+    <title>全局组件，局部组件</title>
+</head>
+<body>
+<div class="container" id="box">
+    {{a}}
+    <br>
+    {{b}}
+    <br>
+    <my-bbb></my-bbb>
+</div>
+<template id="my-bbb">
+    <h1>title</h1>
+    <ul>
+        <li v-for="item in arr">{{item}}</li>
+    </ul>
+</template>
+<script>
+//            var Aaa = Vue.extend({
+//                template:'<h1>{{msg}}</h1>',
+//                data:function(){
+//                    return {
+//                        msg:'welcome'
+//                    }
+//                }
+//            });
+//            Vue.component('bbb',Aaa);
+
+        var vm = new Vue({
+            el:'#box',
+            data:{
+                a:66611,
+                b:9999,
+            },
+            methods:{
+            },
+            components:{
+                'my-aaa':{
+                    data:function(){
+                        return {
+                            msg:666
+                        }
+                    },
+                    methods:{
+                        change:function(){
+                            alert(1);
+                        }
+                    },
+                    template:'<h2 v-on:click="change()">{{msg}}</h2>'
+                },
+                'my-bbb':{
+                    data:function(){
+                        return {
+                            arr:[111,222,333]
+                        }
+                    },
+                    methods:{
+                        change:function(){
+                            alert(1);
+                        }
+                    },
+                    template:'#my-bbb'
+                }
+            }
+        });
+
+
+</script>
+</body>
+</html>
