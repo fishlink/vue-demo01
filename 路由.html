@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="./lib/bower_components/vue/dist/vue.js"></script>
+    <script src="./lib/bower_components/vue-router/dist/vue-router.js"></script>
+    <title>路由</title>
+    <style>
+        .v-link-active{
+            color:red;
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+        <a v-link="{path:'/home'}">首页</a>
+        <a v-link="{path:'/news'}">新闻</a>
+        <div>
+            <router-view></router-view>
+        </div>
+    </div>
+    <template id="index">
+        <h1>我是首页</h1>
+        <a v-link="{path:'/home/login'}">登录</a>
+        <a v-link="{path:'/home/register'}">注册</a>
+        <router-view></router-view>
+    </template>
+
+    <template id="news">
+        <h1>我是新闻</h1>
+        <a v-link="{path:'/news/details/001'}">新闻001</a>
+        <a v-link="{path:'/news/details/002'}">新闻002</a>
+        <router-view></router-view>
+    </template>
+    <script>
+        var App = Vue.extend();
+
+        var Home = Vue.extend({
+            template:'#index'
+        });
+
+        var News = Vue.extend({
+            template:'#news'
+        });
+
+        var Router = new VueRouter();
+
+        Router.map({
+            'home':{
+                component:Home,
+                subRoutes:{
+                    'login':{
+                        component:{
+                            template:'<h3>我是登录</h3>'
+                        }
+                    },
+                    'register':{
+                        component:{
+                            template:'<h3>我是注册</h3>'
+                        }
+                    }
+                }
+            },
+            'news':{
+                component:News,
+                subRoutes:{
+                    'details/:id':{
+                        component:{
+                            template:'<h3>我是文章details{{msg|json}}</h3>',
+                            data:function(){
+                                return {
+                                    msg:this.$route.params
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        Router.start(App,'#box');
+
+        Router.redirect({
+            '/':'/home'
+        });
+    </script>
+</body>
+</html>

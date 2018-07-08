@@ -1,0 +1,18 @@
+{
+  "name": "vue",
+  "homepage": "https://github.com/fishlink/vue-demo01",
+  "authors": [
+    "MACHENIKE <992031717@qq.com>"
+  ],
+  "description": "this is vue test demo",
+  "main": "",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
